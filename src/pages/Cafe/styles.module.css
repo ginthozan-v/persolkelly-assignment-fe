@@ -1,0 +1,39 @@
+.container {
+  padding: 20px 120px;
+}
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.addBtn {
+  background-color: red;
+  border: none;
+  padding: 10px 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.searchGrp{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

@@ -1,0 +1,11 @@
+.paper {
+  max-width: 500px;
+  margin-top: 10px;
+  padding: 15px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

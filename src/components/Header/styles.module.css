@@ -1,0 +1,14 @@
+.header{
+    width: 100%;
+    padding: 20px 120px;
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.siteTitle{
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.active{
+    color: red;
+}
