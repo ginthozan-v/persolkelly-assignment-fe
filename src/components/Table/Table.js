@@ -12,10 +12,25 @@ const Table = ({ rows, column }) => {
     params.api.sizeColumnsToFit();
   };
 
+  const gridOptions = {
+    alignedGrids: [],
+    defaultColDef: {
+      editable: false,
+      sortable: false,
+      resizable: false,
+      filter: false,
+      flex: 1,
+      minWidth: 190,
+      headerHeight: 150,
+    },
+  };
+
   return (
-    <div className={`ag-theme-alpine ${s.table}`}>
+    <div className={`ag-theme-alpine
+    ${s.table}`}>
       <AgGridReact
         onGridReady={onGridReady}
+        gridOptions={gridOptions}
         rowData={rows}
         columnDefs={column}
       ></AgGridReact>

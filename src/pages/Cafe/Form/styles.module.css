@@ -5,8 +5,14 @@
 }
 
 .paper {
-  width: 500px !important;
+  width: 240px !important;
   padding: 25px;
+}
+
+@media screen and (min-width: 573px) {
+  .paper {
+    width: 500px !important;
+  }
 }
 
 .form {

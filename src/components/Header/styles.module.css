@@ -1,7 +1,7 @@
 .header {
   padding: 20px 10px;
-  background-color: #d1a9b6;
-  border-bottom: 2px solid #983555;
+  /* background-color: #fcb69f;
+  border-bottom: 1px solid #ffecd2; */
 }
 
 @media screen and (min-width: 1024px) {

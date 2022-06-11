@@ -16,12 +16,21 @@
 
 .btnContainer {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0;
   background-color: white; 
   padding: 15px;
   border: 1px solid rgb(200, 200, 200);
+  border-bottom: 0;
+  gap: 10px;
+}
+
+@media screen and (min-width: 573px) {
+  .btnContainer {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .addBtn {

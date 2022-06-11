@@ -23,7 +23,6 @@ import { addEmployeeCafes, getCafes } from "../../../redux/actions/cafes";
 
 const Form = () => {
   const [currentId, setCurrentId] = useState(null);
-
   const [employeeData, setEmployeeData] = useState({
     id: "",
     name: "",
@@ -51,6 +50,7 @@ const Form = () => {
       dispatch(createEmployee(values));
     }
 
+    // add employee to cafe if cafe selected
     if (values.cafe !== "") {
       const employee = {
         employee_id: values.id,

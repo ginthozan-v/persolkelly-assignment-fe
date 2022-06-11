@@ -4,11 +4,11 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Grid, TextField } from "@mui/material";
 
 import Table from "../../components/Table/Table";
 import s from "./styles.module.css";
 import { deleteCafes, getCafes, getCafesBySearch } from "./../../redux/actions/cafes";
-import { Grid, TextField } from "@mui/material";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -31,7 +31,7 @@ const Cafe = () => {
   const ButtonRender = (params) => {
     return (
       <div className={s.btnGroup}>
-        <Link to={`/edit-cafe/${ params.data.id }`}>
+        <Link to={`/edit-cafe/${ params.data.id }`} className={s.link}>
           <Button size="small" variant="contained">
             Edit
           </Button>
@@ -50,9 +50,7 @@ const Cafe = () => {
 
   const ImageRender = params => {
     return (
-      <div>
-        <img src={params.data.logo} alt="logo" width={70} height={70} />
-      </div>
+        <img src={params.data.logo} alt="logo" width={70} height={70} style={{margin: '5px 0'}} />
     )
   }
 
@@ -66,12 +64,12 @@ const Cafe = () => {
 
   const [rowsData, setRowsData] = useState([]);
   const [columnDefs] = useState([
-    { field: "logo", cellRenderer: ImageRender, width: "100px", autoHeight: true },
+    { field: "logo", cellRenderer: ImageRender, autoHeight: true },
     { field: "name" },
     { field: "description" },
     { field: "employees", cellRenderer: LinkRender },
     { field: "location" },
-    { field: "", cellRenderer: ButtonRender, width: "240px" },
+    { field: "", cellRenderer: ButtonRender },
   ]);
 
   const [search, setSearch] = useState("");

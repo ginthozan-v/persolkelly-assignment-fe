@@ -33,7 +33,7 @@ const Employee = (props) => {
   const ButtonRender = (params) => {
     return (
       <div className={s.btnGroup}>
-        <Link to={`/edit-employee/${ params.data.id }`}>
+        <Link to={`/edit-employee/${ params.data.id }`} className={s.link}>
           <Button
             size="small"
             variant="contained"
