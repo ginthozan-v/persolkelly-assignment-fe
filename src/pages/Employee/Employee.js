@@ -21,7 +21,7 @@ const Employee = (props) => {
   const searchQuery = query.get("cafe");
 
   const [rowsData, setRowsData] = useState([]);
-  let employees = useSelector((state) => state.employees);
+  const employees = useSelector((state) => state.employees);
 
   const deleteRow = (id) => {
     let isExecuted = window.confirm("Are you sure to execute this deletion?");
@@ -94,18 +94,19 @@ const Employee = (props) => {
 
   useEffect(() => {
     let tableData = [];
-    employees = employees?.sort((a, b) => b.days - a.days)
-    employees?.map((d) =>
-      tableData.push({
-        id: d._id,
-        name: d.name,
-        email: d.email,
-        phone: d.phone,
-        gender: d.gender,
-        days: d.days + ' days',
-        cafe: d.cafe
-      })
-    );
+    employees
+      ?.sort((a, b) => b.days - a.days)
+      .map((d) =>
+        tableData.push({
+          id: d._id,
+          name: d.name,
+          email: d.email,
+          phone: d.phone,
+          gender: d.gender,
+          days: d.days + ' days',
+          cafe: d.cafe
+        })
+      );
 
     setRowsData(tableData);
   }, [employees]);
