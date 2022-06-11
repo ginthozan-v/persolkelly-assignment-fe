@@ -1,5 +1,5 @@
 # Cafe Employee Manager - Frontend
-This project was buil with ReactJS | Redux | AG Grid | Fromik 
+This project was buil with **ReactJS | Redux | AG Grid | Fromik**
 
 ## To run the project
 
