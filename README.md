@@ -23,7 +23,7 @@ now the application is running locally.
 
 ## Preview
 
-Preview live on [Netlify](https://calculate-everything.netlify.app/)
+Preview live on [Netlify](https://calculate-everything.netlify.app/) <br />
 Backend live on [Heroku](https://cafe-employee.herokuapp.com/)
 
 Backend Repository: [https://github.com/ginthozan-v/cafe-employee-backend.git]
