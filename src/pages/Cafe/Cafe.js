@@ -31,7 +31,7 @@ const Cafe = () => {
   const ButtonRender = (params) => {
     return (
       <div className={s.btnGroup}>
-        <Link to={`/edit-cafe/${ params.data.id }`} className={s.link}>
+        <Link to={`/edit-cafe/${ params.data._id }`} className={s.link}>
           <Button size="small" variant="contained">
             Edit
           </Button>
@@ -40,7 +40,7 @@ const Cafe = () => {
           size="small"
           variant="outlined"
           startIcon={<DeleteIcon />}
-          onClick={() => deleteRow(params.data.id)}
+          onClick={() => deleteRow(params.data._id)}
         >
           Delete
         </Button>
@@ -103,7 +103,8 @@ const Cafe = () => {
     let tableData = [];
     cafes.map((d) =>
       tableData.push({
-        id: d._id,
+        _id: d._id,
+        id: d.id,
         logo: d.logo,
         name: d.name,
         description: d.description,

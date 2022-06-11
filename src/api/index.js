@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'https://cafe-employee.herokuapp.com';
+const baseUrl = 'http://localhost:5000';
 const cafesUrl = `${baseUrl}/cafes`;
 const employeesUrl = `${baseUrl}/employees`;
 

@@ -5,9 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { v4 as uuidv4 } from "uuid";
 
 import s from "./styles.module.css";
-import { createCafes, getCafes, updateCafes } from "../../../redux/actions/cafes";
+import {
+  createCafes,
+  getCafes,
+  updateCafes,
+} from "../../../redux/actions/cafes";
 import { Container } from "@mui/system";
 
 const Form = () => {
@@ -29,6 +34,7 @@ const Form = () => {
     if (currentId) {
       dispatch(updateCafes(currentId, value));
     } else {
+      value.id = uuidv4();
       dispatch(createCafes(value));
     }
     clear();
@@ -57,7 +63,8 @@ const Form = () => {
       const data = cafes.find((c) => c._id === currentId);
       if (data) {
         setCafeData({
-          id: data._id,
+          _id: data._id,
+          id: data.id,
           name: data.name,
           description: data.description,
           logo: data.logo,
@@ -95,6 +102,7 @@ const Form = () => {
             handleChange,
             handleSubmit,
             setFieldValue,
+            submitCount,
           }) => (
             <form
               autoComplete="off"

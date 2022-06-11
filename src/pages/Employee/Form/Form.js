@@ -22,10 +22,26 @@ import { Container } from "@mui/system";
 import { addEmployeeCafes, getCafes } from "../../../redux/actions/cafes";
 
 
+function generateUUID() { 
+  var d = new Date().getTime();//Timestamp
+  var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds 
+  return 'UIXXXXXXX'.replace(/[X]/g, function(c) {
+      var r = Math.random() * 16;//random number between 0 and 16
+      if(d > 0){//Use timestamp until depleted
+          r = (d + r)%16 | 0;
+          d = Math.floor(d/16);
+      } else {//Use microseconds since page-load if supported
+          r = (d2 + r)%16 | 0;
+          d2 = Math.floor(d2/16);
+      }
+      return (c === 'X' && r ).toString(16);
+  });
+}
+
+
 const Form = () => {
   const [currentId, setCurrentId] = useState(null);
   const [employeeData, setEmployeeData] = useState({
-    id: "",
     name: "",
     email: "",
     phone: "",
@@ -45,16 +61,19 @@ const Form = () => {
   let employees = useSelector((state) => state.employees);
 
   const handleSubmit = (values) => {
+    const uuid = generateUUID();
+
     if (currentId) {
       dispatch(updateEmployee(currentId, values));
     } else {
+      values.id = uuid;
       dispatch(createEmployee(values));
     }
 
     // add employee to cafe if cafe selected
     if (values.cafe !== "") {
       const employee = {
-        employee_id: values.id,
+        employee_id: values._id,
         name: values.name,
         startDate: new Date(),
       };
@@ -66,7 +85,6 @@ const Form = () => {
   const clear = () => {
     setCurrentId(null);
     setEmployeeData({
-      id: "",
       name: "",
       email: "",
       phone: "",
@@ -88,7 +106,8 @@ const Form = () => {
       const data = employees.find((c) => c._id === currentId);
       if (data) {
         setEmployeeData({
-          id: data._id,
+          _id: data._id,
+          id: data.id,
           name: data.name,
           email: data.email,
           phone: data.phone,

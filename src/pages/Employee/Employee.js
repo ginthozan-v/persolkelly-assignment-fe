@@ -33,7 +33,7 @@ const Employee = (props) => {
   const ButtonRender = (params) => {
     return (
       <div className={s.btnGroup}>
-        <Link to={`/edit-employee/${ params.data.id }`} className={s.link}>
+        <Link to={`/edit-employee/${ params.data._id }`} className={s.link}>
           <Button
             size="small"
             variant="contained"
@@ -45,7 +45,7 @@ const Employee = (props) => {
           size="small"
           variant="outlined"
           startIcon={<DeleteIcon />}
-          onClick={() => deleteRow(params.data.id)}
+          onClick={() => deleteRow(params.data._id)}
         >
           Delete
         </Button>
@@ -98,7 +98,8 @@ const Employee = (props) => {
       ?.sort((a, b) => b.days - a.days)
       .map((d) =>
         tableData.push({
-          id: d._id,
+          _id: d._id,
+          id: d.id,
           name: d.name,
           email: d.email,
           phone: d.phone,
