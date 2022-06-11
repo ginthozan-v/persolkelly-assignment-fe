@@ -3,6 +3,7 @@ import {
   Autocomplete,
   Button,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Paper,
@@ -131,6 +132,8 @@ const Form = () => {
             phone: Yup.string()
               .matches(phoneRegExp, "Phone number is not valid")
               .required("Required"),
+            gender: Yup.string()
+              .required("Required"),
           })}
         >
           {({
@@ -180,7 +183,7 @@ const Form = () => {
                 error={errors.phone && touched.phone}
                 helperText={errors.phone}
               />
-              <FormControl fullWidth>
+              <FormControl error={errors.gender && touched.gender} fullWidth>
                 <InputLabel id="demo-simple-select-label">Gender</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -193,8 +196,8 @@ const Form = () => {
                 >
                   <MenuItem value={"male"}>Male</MenuItem>
                   <MenuItem value={"female"}>Female</MenuItem>
-                  <MenuItem value={"other"}>Other</MenuItem>
                 </Select>
+                <FormHelperText>{errors.gender}</FormHelperText>
               </FormControl>
               {currentId && (
                 <Autocomplete

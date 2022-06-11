@@ -85,11 +85,7 @@ const Employee = (props) => {
 
 
   useEffect(() => {
-    if (searchQuery) {
-      dispatch(getEmployeesByCafe({ search: searchQuery }));
-    } else {
     dispatch(getEmployees());
-    }
   }, [dispatch, searchQuery]);
 
   useEffect(() => {
