@@ -1,6 +1,11 @@
+.container{
+  display: grid !important;
+  place-items: center !important;
+  height: 70vh;
+}
+
 .paper {
-  max-width: 500px;
-  margin: 30px auto;
+  width: 500px !important;
   padding: 25px;
 }
 

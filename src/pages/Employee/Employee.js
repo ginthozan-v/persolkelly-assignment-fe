@@ -3,25 +3,37 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import Table from "../../components/Table/Table";
 import s from "./styles.module.css";
-import { Grid } from "@mui/material";
-import { deleteEmployee, getEmployees } from "../../actions/employees";
-import { getCafes } from './../../actions/cafes';
+import { Grid, TextField } from "@mui/material";
+import { deleteEmployee, getEmployees, getEmployeesByCafe } from "../../redux/actions/employees";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const Employee = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const query = useQuery();
+  const searchQuery = query.get("cafe");
 
-  const [currentId, setCurrentId] = useState(null);
   const [rowsData, setRowsData] = useState([]);
-  const [employees, cafes] = useSelector((state) => [state.employees, state.cafes]);
+  const employees = useSelector((state) => state.employees);
+
+  const deleteRow = (id) => {
+    let isExecuted = window.confirm("Are you sure to execute this deletion?");
+    if (isExecuted) {
+      dispatch(deleteEmployee(id));
+    }
+  }
 
   const ButtonRender = (params) => {
     return (
       <div className={s.btnGroup}>
-        <Link to={`/edit-employee/${params.data.id}`}>
+        <Link to={`/edit-employee/${ params.data.id }`}>
           <Button
             size="small"
             variant="contained"
@@ -33,7 +45,7 @@ const Employee = (props) => {
           size="small"
           variant="outlined"
           startIcon={<DeleteIcon />}
-          onClick={() => dispatch(deleteEmployee(params.data.id))}
+          onClick={() => deleteRow(params.data.id)}
         >
           Delete
         </Button>
@@ -52,13 +64,38 @@ const Employee = (props) => {
     { field: "", cellRenderer: ButtonRender, width: "300px" },
   ]);
 
+  const [search, setSearch] = useState("");
+
+  const handleKeyPress = () => {
+    if (search === '') {
+      dispatch(getEmployees());
+      navigate("/employee");
+    }
+  };
+
+  const searchEmployee = () => {
+    if (search.trim()) {
+      dispatch(getEmployeesByCafe({ search }));
+      navigate(`/employee?cafe=${ search }`);
+    } else {
+      dispatch(getEmployees());
+      navigate("/employee");
+    }
+  };
+
+
   useEffect(() => {
+    if (searchQuery) {
+      dispatch(getEmployeesByCafe({ search: searchQuery }));
+    } else {
     dispatch(getEmployees());
-  }, [currentId, dispatch]);
+    }
+  }, [dispatch, searchQuery]);
 
   useEffect(() => {
     let tableData = [];
-    employees.map((d) =>
+    employees?.sort((a, b) => b.days - a.days)
+    employees?.map((d) =>
       tableData.push({
         id: d._id,
         name: d.name,
@@ -69,29 +106,40 @@ const Employee = (props) => {
         cafe: d.cafe
       })
     );
-    
+
     setRowsData(tableData);
   }, [employees]);
-  
+
   return (
     <div className={s.container}>
-       <div className={s.btnContainer}>
+      <div className={s.btnContainer}>
+        <div className={s.searchGrp}>
+          <TextField
+            name="search"
+            variant="outlined"
+            label="Cafe Search"
+            size="small"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyUp={handleKeyPress}
+          />
+          <Button
+            variant="contained"
+            size="medium"
+            onClick={() => searchEmployee()}
+          >
+            Search
+          </Button>
+        </div>
         <Link to="/add-employee" className={s.link}>
           <Button variant="contained">Add new employee</Button>
         </Link>
-      </div> 
+      </div>
 
       <Grid container spacing={4}>
         <Grid item xs={12}>
           <Table rows={rowsData} column={columnDefs} />
         </Grid>
-        {/* <Grid item xs={3}>
-          <Form
-            currentId={currentId}
-            setCurrentId={setCurrentId}
-            data={currentId ? employees.find((c) => c._id === currentId) : null}
-          />
-        </Grid> */}
       </Grid>
     </div>
   )

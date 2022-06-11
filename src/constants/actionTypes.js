@@ -1,5 +1,11 @@
-export const CREATE = 'CREATE';
-export const UPDATE = 'UPDATE';
-export const DELETE = 'DELETE';
-export const FETCH_ALL = 'FETCH_ALL';
-export const FETCH_BY_SEARCH = 'FETCH_BY_SEARCH';
+export const FETCH_ALL_CAFE = 'FETCH_ALL_CAFE';
+export const CREATE_CAFE = 'CREATE_CAFE';
+export const UPDATE_CAFE = 'UPDATE_CAFE';
+export const DELETE_CAFE = 'DELETE_CAFE';
+export const FETCH_BY_SEARCH_CAFE = 'FETCH_BY_SEARCH_CAFE';
+
+export const FETCH_ALL_EMPLOYEE = 'FETCH_ALL_EMPLOYEE';
+export const CREATE_EMPLOYEE = 'CREATE_EMPLOYEE';
+export const UPDATE_EMPLOYEE = 'UPDATE_EMPLOYEE';
+export const DELETE_EMPLOYEE = 'DELETE_EMPLOYEE';
+export const FETCH_BY_SEARCH_EMPLOYEE = 'FETCH_BY_SEARCH_EMPLOYEE';

@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import Table from "../../components/Table/Table";
 import s from "./styles.module.css";
-import { deleteCafes, getCafes, getCafesBySearch } from "./../../actions/cafes";
+import { deleteCafes, getCafes, getCafesBySearch } from "./../../redux/actions/cafes";
 import { Grid, TextField } from "@mui/material";
 
 function useQuery() {
@@ -15,12 +15,18 @@ function useQuery() {
 }
 
 const Cafe = () => {
-  const [currentId, setCurrentId] = useState(null);
   const cafes = useSelector((state) => state.cafes);
   const dispatch = useDispatch();
-  const query = useQuery();
   const navigate = useNavigate();
-  const searchQuery = query.get("searchQuery");
+  const query = useQuery();
+  const searchQuery = query.get("location");
+
+  const deleteRow = (id) => {
+    let isExecuted = window.confirm("Are you sure to execute this deletion?");
+    if (isExecuted) {
+      dispatch(deleteCafes(id));
+    }
+  }
 
   const ButtonRender = (params) => {
     return (
@@ -34,7 +40,7 @@ const Cafe = () => {
           size="small"
           variant="outlined"
           startIcon={<DeleteIcon />}
-          onClick={() => dispatch(deleteCafes(params.data.id))}
+          onClick={() => deleteRow(params.data.id)}
         >
           Delete
         </Button>
@@ -45,18 +51,25 @@ const Cafe = () => {
   const ImageRender = params => {
     return (
       <div>
-        <img src={params.data.logo} alt="logo" width={70} height={70}/>
+        <img src={params.data.logo} alt="logo" width={70} height={70} />
       </div>
+    )
+  }
+
+  const LinkRender = params => {
+    return (
+      <Link to={`/employee?cafe=${ params.data.name }`}>
+        {params.data.employees} Employees
+      </Link>
     )
   }
 
   const [rowsData, setRowsData] = useState([]);
   const [columnDefs] = useState([
-    { field: "id" },
     { field: "logo", cellRenderer: ImageRender, width: "100px", autoHeight: true },
     { field: "name" },
     { field: "description" },
-    { field: "employees" },
+    { field: "employees", cellRenderer: LinkRender },
     { field: "location" },
     { field: "", cellRenderer: ButtonRender, width: "240px" },
   ]);
@@ -81,8 +94,12 @@ const Cafe = () => {
   };
 
   useEffect(() => {
-    dispatch(getCafes());
-  }, [currentId, dispatch]);
+    if (searchQuery) {
+      dispatch(getCafesBySearch({ search: searchQuery }));
+    } else {
+      dispatch(getCafes());
+    }
+  }, [dispatch, searchQuery]);
 
   useEffect(() => {
     let tableData = [];
@@ -128,13 +145,6 @@ const Cafe = () => {
         <Grid item xs={12}>
           <Table rows={rowsData} column={columnDefs} />
         </Grid>
-        {/* <Grid item xs={3}>
-          <Form
-            currentId={currentId}
-            setCurrentId={setCurrentId}
-            data={currentId ? cafes.find((c) => c._id === currentId) : null}
-          />
-        </Grid> */}
       </Grid>
     </div>
   );
