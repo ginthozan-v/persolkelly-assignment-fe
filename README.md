@@ -1,5 +1,5 @@
 # Cafe Employee Manager - Frontend
-This project was buil with/ **ReactJS | Redux | AG Grid | Fromik**
+This project was buil with **ReactJS | Redux | AG Grid | Fromik**
 
 ## To run the project
 
@@ -14,9 +14,12 @@ first inside backend project, change then line 8 in package.json "from node to n
 then run the script **npm run**
 
 once the backend is running
-then inside frontend project go to src/api/index.js change the both base url to http://localhost:5000
-```
+then inside frontend project go to src/api/index.js change the baseUrl to http://localhost:5000
+then run the script **npm run**
 
+now the application running locally.
+```
+###### The DB is up on Mongodb cloud.
 
 ## Preview
 
