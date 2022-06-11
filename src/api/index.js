@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const cafesUrl = 'https://cafe-employee.herokuapp.com/cafes';
-const employeesUrl = 'https://cafe-employee.herokuapp.com/employees';
+const baseUrl = 'https://cafe-employee.herokuapp.com';
+const cafesUrl = `${baseUrl}/cafes`;
+const employeesUrl = `${baseUrl}/employees`;
 
 export const fetchCafes = () => axios.get(cafesUrl);
 export const fetchCafesBySearch = (searchQuery) => axios.get(`${cafesUrl}?location=${searchQuery.search}`);

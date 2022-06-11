@@ -10,8 +10,11 @@ Clone the project and In the project directory, you can run:
 
 ```
 If you want to run the project on your local machine, 
-first inside backend project, change then line 8 in package.json _from node to nodemon_
+first inside backend project, change then line 8 in package.json "from node to nodemon"
 then run the script **npm run**
+
+once the backend is running
+then inside frontend project go to src/api/index.js change the both base url to http://localhost:5000
 ```
 
 
