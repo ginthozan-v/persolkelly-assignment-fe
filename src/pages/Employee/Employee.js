@@ -21,7 +21,7 @@ const Employee = (props) => {
   const searchQuery = query.get("cafe");
 
   const [rowsData, setRowsData] = useState([]);
-  const employees = useSelector((state) => state.employees);
+  let employees = useSelector((state) => state.employees);
 
   const deleteRow = (id) => {
     let isExecuted = window.confirm("Are you sure to execute this deletion?");
@@ -85,12 +85,16 @@ const Employee = (props) => {
 
 
   useEffect(() => {
-    dispatch(getEmployees());
+    if (searchQuery) {
+      dispatch(getEmployeesByCafe({ search: searchQuery }));
+    } else {
+      dispatch(getEmployees());
+    }
   }, [dispatch, searchQuery]);
 
   useEffect(() => {
     let tableData = [];
-    employees?.sort((a, b) => b.days - a.days)
+    employees = employees?.sort((a, b) => b.days - a.days)
     employees?.map((d) =>
       tableData.push({
         id: d._id,
