@@ -1,5 +1,5 @@
 # Cafe Employee Manager - Frontend
-This project was buil with **ReactJS | Redux | AG Grid | Fromik**
+This project was buil with/ **ReactJS | Redux | AG Grid | Fromik**
 
 ## To run the project
 
@@ -7,6 +7,12 @@ Clone the project and In the project directory, you can run:
 
 ### `npm install`
 ### `npm start`
+
+```
+If you want to run the project on your local machine, 
+first inside backend project, change then line 8 in package.json _from node to nodemon_
+then run the script **npm run**
+```
 
 
 ## Preview
