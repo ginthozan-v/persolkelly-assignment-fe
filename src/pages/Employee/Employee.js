@@ -8,7 +8,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Table from "../../components/Table/Table";
 import s from "./styles.module.css";
 import { Grid, TextField } from "@mui/material";
-import { deleteEmployee, getEmployees, getEmployeesByCafe } from "../../redux/actions/employees";
+import {
+  deleteEmployee,
+  getEmployees,
+  getEmployeesByCafe,
+} from "../../redux/actions/employees";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -24,20 +28,19 @@ const Employee = (props) => {
   const employees = useSelector((state) => state.employees);
 
   const deleteRow = (id) => {
-    let isExecuted = window.confirm("Are you sure to execute this deletion?");
+    let isExecuted = window.confirm(
+      `Are you sure to execute this deletion? ${id}`
+    );
     if (isExecuted) {
       dispatch(deleteEmployee(id));
     }
-  }
+  };
 
   const ButtonRender = (params) => {
     return (
       <div className={s.btnGroup}>
-        <Link to={`/edit-employee/${ params.data._id }`} className={s.link}>
-          <Button
-            size="small"
-            variant="contained"
-          >
+        <Link to={`/edit-employee/${params.data._id}`} className={s.link}>
+          <Button size="small" variant="contained">
             Edit
           </Button>
         </Link>
@@ -67,7 +70,7 @@ const Employee = (props) => {
   const [search, setSearch] = useState("");
 
   const handleKeyPress = () => {
-    if (search === '') {
+    if (search === "") {
       dispatch(getEmployees());
       navigate("/employee");
     }
@@ -76,13 +79,12 @@ const Employee = (props) => {
   const searchEmployee = () => {
     if (search.trim()) {
       dispatch(getEmployeesByCafe({ search }));
-      navigate(`/employee?cafe=${ search }`);
+      navigate(`/employee?cafe=${search}`);
     } else {
       dispatch(getEmployees());
       navigate("/employee");
     }
   };
-
 
   useEffect(() => {
     if (searchQuery) {
@@ -94,6 +96,7 @@ const Employee = (props) => {
 
   useEffect(() => {
     let tableData = [];
+    console.log(employees);
     employees
       ?.sort((a, b) => b.days - a.days)
       .map((d) =>
@@ -104,8 +107,8 @@ const Employee = (props) => {
           email: d.email,
           phone: d.phone,
           gender: d.gender,
-          days: d.days + ' days',
-          cafe: d.cafe
+          days: d.days + " days",
+          cafe: d.cafe,
         })
       );
 
@@ -144,7 +147,7 @@ const Employee = (props) => {
         </Grid>
       </Grid>
     </div>
-  )
-}
+  );
+};
 
-export default Employee
+export default Employee;

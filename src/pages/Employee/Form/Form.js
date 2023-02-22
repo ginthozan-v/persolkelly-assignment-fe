@@ -17,27 +17,35 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 import s from "./styles.module.css";
-import { createEmployee, getEmployees, updateEmployee } from "../../../redux/actions/employees";
+import {
+  createEmployee,
+  getEmployees,
+  updateEmployee,
+} from "../../../redux/actions/employees";
 import { Container } from "@mui/system";
 import { addEmployeeCafes, getCafes } from "../../../redux/actions/cafes";
 
-
-function generateUUID() { 
-  var d = new Date().getTime();//Timestamp
-  var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds 
-  return 'UIXXXXXXX'.replace(/[X]/g, function(c) {
-      var r = Math.random() * 16;//random number between 0 and 16
-      if(d > 0){//Use timestamp until depleted
-          r = (d + r)%16 | 0;
-          d = Math.floor(d/16);
-      } else {//Use microseconds since page-load if supported
-          r = (d2 + r)%16 | 0;
-          d2 = Math.floor(d2/16);
-      }
-      return (c === 'X' && r ).toString(16);
+function generateUUID() {
+  var d = new Date().getTime(); //Timestamp
+  var d2 =
+    (typeof performance !== "undefined" &&
+      performance.now &&
+      performance.now() * 1000) ||
+    0; //Time in microseconds
+  return "UIXXXXXXX".replace(/[X]/g, function (c) {
+    var r = Math.random() * 16; //random number between 0 and 16
+    if (d > 0) {
+      //Use timestamp until depleted
+      r = (d + r) % 16 | 0;
+      d = Math.floor(d / 16);
+    } else {
+      //Use microseconds since page-load if supported
+      r = (d2 + r) % 16 | 0;
+      d2 = Math.floor(d2 / 16);
+    }
+    return (c === "X" && r).toString(16);
   });
 }
-
 
 const Form = () => {
   const [currentId, setCurrentId] = useState(null);
@@ -62,24 +70,35 @@ const Form = () => {
 
   const handleSubmit = (values) => {
     const uuid = generateUUID();
+    const userId = uuid;
 
     if (currentId) {
       dispatch(updateEmployee(currentId, values));
+
+      // add employee to cafe if cafe selected
+      if (values.cafe !== "") {
+        addEmployeeToCafe(values._id, values.name, values.cafe);
+      }
     } else {
-      values.id = uuid;
+      values.id = userId;
+
       dispatch(createEmployee(values));
+      // add employee to cafe if cafe selected
+      if (values.cafe !== "") {
+        addEmployeeToCafe(values.id, values.name, values.cafe);
+      }
     }
 
-    // add employee to cafe if cafe selected
-    if (values.cafe !== "") {
-      const employee = {
-        employee_id: values._id,
-        name: values.name,
-        startDate: new Date(),
-      };
-      dispatch(addEmployeeCafes(values.cafe, employee));
-    }
     clear();
+  };
+
+  const addEmployeeToCafe = (userId, name, cafe) => {
+    const employee = {
+      employee_id: userId,
+      name: name,
+      startDate: new Date(),
+    };
+    dispatch(addEmployeeCafes(cafe, employee));
   };
 
   const clear = () => {
@@ -117,7 +136,6 @@ const Form = () => {
     }
   }, [employees, currentId]);
 
-
   useEffect(() => {
     if (cafes) {
       let dropdown = [];
@@ -151,8 +169,7 @@ const Form = () => {
             phone: Yup.string()
               .matches(phoneRegExp, "Phone number is not valid")
               .required("Required"),
-            gender: Yup.string()
-              .required("Required"),
+            gender: Yup.string().required("Required"),
           })}
         >
           {({
@@ -209,29 +226,27 @@ const Form = () => {
                   id="demo-simple-select"
                   value={values.gender}
                   label="Gender"
-                  onChange={(e) =>
-                    setFieldValue('gender', e.target.value)
-                  }
+                  onChange={(e) => setFieldValue("gender", e.target.value)}
                 >
                   <MenuItem value={"male"}>Male</MenuItem>
                   <MenuItem value={"female"}>Female</MenuItem>
                 </Select>
                 <FormHelperText>{errors.gender}</FormHelperText>
               </FormControl>
-              {currentId && (
-                <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={cafeDropdown}
-                  fullWidth
-                  renderInput={(params) => (
-                    <TextField {...params} label="Cafe" value={values.cafe} />
-                  )}
-                  onChange={(event, newValue) =>
-                    setFieldValue('cafe', newValue.value)
-                  }
-                />
-              )}
+              {/* {currentId && ( */}
+              <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={cafeDropdown}
+                fullWidth
+                renderInput={(params) => (
+                  <TextField {...params} label="Cafe" value={values.cafe} />
+                )}
+                onChange={(event, newValue) =>
+                  setFieldValue("cafe", newValue.value)
+                }
+              />
+              {/* )} */}
               <Button
                 className={s.submitBtn}
                 variant="contained"

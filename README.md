@@ -1,4 +1,4 @@
-# Pearsonkelly Assignment - Frontend
+# Persolkelly Assignment - Frontend
 
 This project was build with <br />
 **ReactJS | Redux | AG Grid | Fromik**
@@ -11,10 +11,7 @@ This project was build with <br />
 
 ## Preview
 
-<!-- Preview live on [Netlify](https://calculate-everything.netlify.app/) <br />
-Backend live on [Heroku](https://cafe-employee.herokuapp.com/) -->
-
-Backend Repository: [https://github.com/ginthozan-v/cafe-employee-backend.git]
+Backend Repository: [https://github.com/ginthozan-v/persolkelly-assignment-be.git]
 
 ## My assumption from the requirement
 
